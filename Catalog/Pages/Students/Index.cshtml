@@ -1,0 +1,78 @@
+﻿@page  "/{id:int?}"
+@model Catalog.Pages.Students.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Nume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Prenume)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].An_studiu)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].FirstYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Tutore.NumeTutore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].CourseCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.StudentD.Students)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.StudentID)
+            {
+                selectedRow = "table-success";
+            }
+        <tr class="@selectedRow">
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Nume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.An_studiu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tutore.NumeTutore)
+            </td>
+            <td>
+                @{
+                    foreach (var category in item.CourseCategories)
+                    {
+                        @category.Category.ID @: @category.Category.NumeCategorie <br />
+                    }
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+            }
+        </tbody>
+</table>
